@@ -1,0 +1,9 @@
+<div class="jumbotron">
+  <h1>Welcome to Baseball Stats</h1>
+  <p>
+    <%= button_to "Player Stats", players_url, method: :get, class:"btn btn-primary btn-lg" %>
+  </p>
+  <% if user_signed_in? %>
+    <%= button_to "Add Year", new_years_path, method: :get, class:"btn btn-primary btn-lg" %>
+  <% end %>
+</div>

@@ -1,0 +1,13 @@
+<%= form_for @year, :url => years_path, :html => { :multipart => true } do |f| %>
+    <div class="form-group">
+      <%= f.label :year %>
+      <%= f.text_field :year, autofocus: true, class:"form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :file %><br>
+      <%= f.file_field :file, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.submit class: "btn btn-primary" %>
+    </div>
+<% end %>

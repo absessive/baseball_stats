@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Baseball Stats</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<%= render 'layouts/header' %>
+<div  class="container">
+  <% flash.each do |key, value| %>
+      <div class="alert alert-<%= key %>" id="elementstatus"><%= value %></div>
+  <% end %>
+  <!--<p class="notice"><%= notice %></p>-->
+  <!--<p class="alert"><%= alert %></p>-->
+
+  <%= yield %>
+</div>
+
+<%= render 'layouts/footer' %>
+
+</body>
+</html>
