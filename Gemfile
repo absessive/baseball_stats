@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-
+ruby '2.2.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
@@ -28,6 +28,8 @@ gem 'devise', '~> 3.4'
 gem 'nokogiri', '~> 1.6'
 # Use paperclip to manage file upload
 gem 'paperclip', '~> 4.2'
+# Use paperclip-dropbox to manage file upload
+gem 'paperclip-dropbox', '>= 1.1.7'
 # Use wice_grid for sortable tables
 gem 'wice_grid', '~> 3.4'
 
@@ -57,4 +59,6 @@ end
 group :production do
   # Use PostgreSQL as the database of Active Record in production
   gem 'pg', '~> 0.18'
+
+  gem 'rails_12factor'
 end
