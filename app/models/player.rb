@@ -1,5 +1,7 @@
 class Player < ActiveRecord::Base
 
+  # Create and add players from a given year
+  # year - The year for which data has to be loaded
   def self.get_players_from_xml_and_add(year)
     doc = Nokogiri::XML.parse(File.open(year.file.path))
     players = doc.xpath("//PLAYER")
@@ -15,7 +17,7 @@ class Player < ActiveRecord::Base
       temp[c.name.downcase.to_sym] = c.text
     end
     new_player.name = temp[:given_name] + " " + temp[:surname]
-    new_player.average = (temp[:hits].to_f / temp[:at_bats].to_f).round(3)
+    new_player.average = get_average(temp)
     new_player.hr = temp[:home_runs].to_i
     new_player.rbi = temp[:rbi].to_i
     new_player.runs = temp[:runs].to_i
@@ -26,6 +28,12 @@ class Player < ActiveRecord::Base
   end
 
   private
+  def self.get_average(player_info)
+    average = (player_info[:hits].to_f / player_info[:at_bats].to_f).round(3)
+    average.is_a?(Numeric) ? average : 0
+  end
+
+
   def self.get_ops(player_info)
     h = player_info[:hits].to_f
     bb = player_info[:walks].to_f
