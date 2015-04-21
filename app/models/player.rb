@@ -16,21 +16,29 @@ class Player < ActiveRecord::Base
     player.children.to_a.each do |c|
       temp[c.name.downcase.to_sym] = c.text
     end
-    new_player.name = temp[:given_name] + " " + temp[:surname]
-    new_player.average = get_average(temp)
-    new_player.hr = temp[:home_runs].to_i
-    new_player.rbi = temp[:rbi].to_i
-    new_player.runs = temp[:runs].to_i
-    new_player.sb = (temp[:steals].to_i - temp[:caught_stealing].to_i)
-    new_player.ops = get_ops(temp).round(3)
-    position = temp[:position]
-    new_player.save unless position.include?("Pitcher")
+    unless temp[:position].include?("Pitcher")
+      new_player.name = temp[:given_name] + " " + temp[:surname]
+      new_player.average = get_average(temp)
+      new_player.hr = temp[:home_runs].to_i
+      new_player.rbi = temp[:rbi].to_i
+      new_player.runs = temp[:runs].to_i
+      new_player.sb = (temp[:steals].to_i - temp[:caught_stealing].to_i)
+      new_player.ops = get_ops(temp).round(3)
+      new_player.save
+    end
   end
 
   private
   def self.get_average(player_info)
-    average = (player_info[:hits].to_f / player_info[:at_bats].to_f).round(3)
-    average.is_a?(Numeric) ? average : 0
+    hits = player_info[:hits].to_f
+    at_bats = player_info[:at_bats].to_f
+    if (at_bats == 0.0)
+      return 0.0
+    else
+      average = (hits.to_f / at_bats.to_f).round(3)
+      return average
+    end
+
   end
 
 
@@ -45,7 +53,11 @@ class Player < ActiveRecord::Base
     hr = player_info[:home_runs].to_f
     b = h - d - t - hr
     ops =( (h+bb+hbp)/ (ab+bb+sf+hbp))+(((1*b)+(2*d)+(3*t)+(4*hr))/ab)
-    ops.is_a?(Float) ? ops : 0
+    if ops > 0
+      return ops
+    else
+      return 0.0
+    end
   end
 
 end

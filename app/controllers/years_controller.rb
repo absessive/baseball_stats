@@ -7,8 +7,8 @@ class YearsController < ApplicationController
 
   def create
     @year = Year.create( year_params )
-    Player.get_players_from_xml_and_add @year
-    redirect_to new_years_path
+    Player.get_players_from_xml_and_add(@year)
+    redirect_to root_path
   end
 
   private

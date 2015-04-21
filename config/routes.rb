@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   devise_for :users
   root to: "home#index"
 
-  resources :players
-  resource :years
+  resources :players, only: [:index]
+  resource :years, only: [:index, :new, :create]
 
 end
