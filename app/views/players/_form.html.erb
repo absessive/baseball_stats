@@ -1,24 +1,31 @@
-<table class="table">
+<%= grid(@players_grid) do |g|
 
-  <tr>
-    <th>Name</th>
-    <th>AVG</th>
-    <th>HR</th>
-    <th>RBI</th>
-    <th>Runs</th>
-    <th>SB</th>
-    <th>OPS</th>
-  </tr>
-    <% @players.each do |player| %>
-      <tr>
-        <td><%= player.name.titleize %></td>
-        <td><%= player.average %></td>
-        <td><%= player.hr %></td>
-        <td><%= player.rbi %></td>
-        <td><%= player.runs %></td>
-        <td><%= player.sb %></td>
-        <td><%= player.ops %></td>
-      </tr>
-    <% end %>
+  g.column name: 'Name' do |player|
+    player.name
+  end
 
-</table>
+  g.column name: 'Average', attribute: 'average', filter: false  do |player|
+    player.average
+  end
+
+  g.column name: 'HR', attribute: 'hr', filter: false do |player|
+    player.hr
+  end
+
+  g.column name: 'RBI', attribute: 'rbi', filter: false do |player|
+    player.rbi
+  end
+
+  g.column name: 'Runs', attribute: 'runs', filter: false do |player|
+    player.runs
+  end
+
+  g.column name: 'SB', attribute: 'sb', filter: false do |player|
+    player.sb
+  end
+
+  g.column name: 'OPS', attribute: 'ops', filter: false do |player|
+    player.ops
+  end
+
+end -%>

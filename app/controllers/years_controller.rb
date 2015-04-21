@@ -1,5 +1,6 @@
 class YearsController < ApplicationController
   before_filter :check_user, only: [:new, :create, :destroy]
+  skip_before_action :verify_authenticity_token
 
   def new
     @year = Year.new
@@ -7,8 +8,13 @@ class YearsController < ApplicationController
 
   def create
     @year = Year.create( year_params )
-    Player.get_players_from_xml_and_add(@year)
-    redirect_to root_path
+    if @year.save
+      Player.get_players_from_xml_and_add(@year)
+      redirect_to players_path, flash: { success: "Players added."}
+    else
+      flash[:warning] = @year.errors.full_messages.join('. ')
+      render :new
+    end
   end
 
   private

@@ -11,10 +11,16 @@
 <%= render 'layouts/header' %>
 <div  class="container">
   <% flash.each do |key, value| %>
-      <div class="alert alert-<%= key %>" id="elementstatus"><%= value %></div>
+      <% if !["success", "info", "warning", "danger"].include?(key.to_s) %>
+        <% type = "info" %>
+      <% else %>
+        <% type = key %>
+      <% end %>
+      <div class="alert alert-<%= type %>" id="elementstatus">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <%= value %>
+      </div>
   <% end %>
-  <!--<p class="notice"><%= notice %></p>-->
-  <!--<p class="alert"><%= alert %></p>-->
 
   <%= yield %>
 </div>

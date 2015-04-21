@@ -8,6 +8,8 @@ class Player < ActiveRecord::Base
     players.each do |p|
       create_player(p)
     end
+  rescue => e
+    flash[:alert] = "Failed to save players"
   end
 
   def self.create_player(player)
